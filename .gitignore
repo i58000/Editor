@@ -31,4 +31,6 @@ hs_err_pid*
 
 #lib
 !/lib/*.jar
+!/lib/docx4j/*.jar
+
 
