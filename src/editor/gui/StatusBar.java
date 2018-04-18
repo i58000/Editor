@@ -34,15 +34,31 @@ public class StatusBar extends JToolBar{
 		add(left);
 		add(right);
 	}
-	public void setLeft(String ipandport){
+	public void updateRemoteInfo(String ipandport){
 		left.setText(RES.statusbar_connected + ipandport);
 	}
-	public void setRight(long delay){
-		if(delay < 2000){
-			right.setText(RES.statusbar_delay + delay);
+	public void updateDelay(long delay){
+		if(delay < 1000){
+			right.setText(RES.statusbar_delay_5);
+		}
+		else if(delay < 2000){
+			right.setText(RES.statusbar_delay_4);
+		}
+		else if(delay < 3000){
+			right.setText(RES.statusbar_delay_3);
+		}
+		else if(delay < 4000){
+			right.setText(RES.statusbar_delay_2);
+		}
+		else if(delay < 5000){
+			right.setText(RES.statusbar_delay_1);
 		}
 		else{
-			right.setText(RES.statusbar_disconnected + delay/1000);
+			right.setText(RES.statusbar_delay_0);
+			left.setText(RES.statusbar_disconnected
+					+ "，"
+					+ (60 - delay/1000)
+					+ RES.statusbar_disconnected_seconds);
 		}
 		
 	}

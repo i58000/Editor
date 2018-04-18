@@ -66,6 +66,12 @@ public class RES {
 	//StatusBar
 	public static final String statusbar_unconnected = "未连接";
 	public static final String statusbar_connected = "已连接:";
-	public static final String statusbar_delay = "延迟(ms):";
-	public static final String statusbar_disconnected = "已断线(s):";
+	public static final String statusbar_delay_0 = "○○○○○";
+	public static final String statusbar_delay_1 = "●○○○○";
+	public static final String statusbar_delay_2 = "●●○○○";
+	public static final String statusbar_delay_3 = "●●●○○";
+	public static final String statusbar_delay_4 = "●●●●○";
+	public static final String statusbar_delay_5 = "●●●●●";
+	public static final String statusbar_disconnected = "已断线";
+	public static final String statusbar_disconnected_seconds = "秒后关闭CSCW";
 }

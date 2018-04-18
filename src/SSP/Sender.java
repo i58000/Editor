@@ -136,6 +136,6 @@ public class Sender extends Thread {
 	
 	//status
 	private void updateLastHeardInfo(){
-		conn.updateLastHeardInfo();
+		conn.updateDelay();
 	}
 }

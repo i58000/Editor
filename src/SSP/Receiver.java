@@ -41,6 +41,9 @@ public class Receiver extends Thread {
         		Packet p = Packet.parseFrom(arr);
         		conn.last_heard_time = System.currentTimeMillis();
         		
+        		updateRemoteInfo();
+//        		updateLastHeardInfo();
+        		
         		unpack(p);
         		
         		System.out.println("recv : " + rcvdStates);
@@ -79,7 +82,6 @@ public class Receiver extends Thread {
             	editor.setText( newText );
             //7. update conn info
             conn.last_rcvd_num = rs.num;
-            updateRemoteInfo();
             break;
 		case NOP:
 			process_acknowledgment_through(p.ack);
@@ -120,6 +122,9 @@ public class Receiver extends Thread {
 		conn.remote_addr = dp.getAddress();
 	    conn.remote_port = dp.getPort();
 	    conn.updateRemoteInfo();
+	}
+	private void updateLastHeardInfo(){
+		conn.updateDelay();
 	}
 	
 }

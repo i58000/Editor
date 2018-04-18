@@ -137,11 +137,11 @@ public class Connection {
 	public void updateRemoteInfo(){
 		String ip = remote_addr.getHostName();
 		String port = Integer.toString(remote_port);
-		gui.getStatusbar().setLeft(ip + ":" + port);
+		gui.getStatusbar().updateRemoteInfo(ip + ":" + port);
 	}
-	public void updateLastHeardInfo(){
+	public void updateDelay(){
 		long delay = System.currentTimeMillis() - last_heard_time;
-		gui.getStatusbar().setRight(delay);
+		gui.getStatusbar().updateDelay(delay);
 		if(delay > TIMEOUT_DISCONNECT)
 			close();
 	}
