@@ -1,1 +1,1 @@
-# Editor-with-CSCW
+# Editor
