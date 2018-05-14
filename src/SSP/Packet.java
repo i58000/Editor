@@ -1,5 +1,12 @@
 package SSP;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import com.google.protobuf.InvalidProtocolBufferException;
 
 enum Type {
@@ -49,54 +56,40 @@ public class Packet{
 		return new State(diff, old, ack, throwaway, num);
 	}
 	
-	public byte[] toByteArray(){
+	public byte[] toByteArray(String key){
+		
 		Proto.packet.Builder builder = Proto.packet.newBuilder();
-//		System.out.println("sendx: "+ Type.values()[TYPE.ordinal()] );
 		builder.setTYPE(TYPE.ordinal());
 		builder.setNum(num);
 		builder.setAck(ack);
 		builder.setOld(old);
 		builder.setThrowaway(throwaway);
-//		if(diff.appendix == null) diff.appendix = "";
 		builder.setDiffAppendix(diff.appendix);
 		builder.setDiffIndex(diff.index);
 		
         Proto.packet pp = builder.build();
-//        System.out.println("===");
-//        System.out.println(pp.toString());
-//        System.out.println("===");
-//        try {
-//        	System.out.println(Proto.packet.parseFrom(pp.toByteArray()).toString());
-//		} catch (InvalidProtocolBufferException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//        System.out.println("===");
-        return pp.toByteArray();
+        
+        return ZLibUtils.compress(
+        		AESUtils.encrypt(
+        				pp.toByteArray(), key));
 	}
 	
-	static public Packet parseFrom(byte[] arr){
-		try {
-			Proto.packet pp = Proto.packet.parseFrom(arr);
-			Packet p = new Packet();
-			p.TYPE = Type.values()[ pp.getTYPE() ];
-			p.ack = pp.getAck();
-			p.num = pp.getNum();
-			p.old = pp.getOld();
-			p.throwaway = pp.getThrowaway();
-			p.diff = new Diff(
-					pp.getDiffAppendix(),  
-					pp.getDiffIndex()
-					);
-//			System.out.println(pp.toString());
-//			System.out.println("recvx:" + p.TYPE);
-			return p;
-			
-		} catch (InvalidProtocolBufferException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
+	static public Packet parseFrom(byte[] arr, String key) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidProtocolBufferException{
+
+		Proto.packet pp = Proto.packet.parseFrom(
+				AESUtils.decrypt(
+						ZLibUtils.decompress(arr), key));
+		Packet p = new Packet();
+		p.TYPE = Type.values()[ pp.getTYPE() ];
+		p.ack = pp.getAck();
+		p.num = pp.getNum();
+		p.old = pp.getOld();
+		p.throwaway = pp.getThrowaway();
+		p.diff = new Diff(
+				pp.getDiffAppendix(),  
+				pp.getDiffIndex()
+				);
+		return p;
 	}
+	
 }

@@ -21,6 +21,8 @@ public class Connection {
 	private Editor editor;
 	private GUI gui;
 	
+	private String key;
+	
 	private boolean connected = false;
 	private boolean run = false;
 	private boolean is_server;
@@ -43,8 +45,9 @@ public class Connection {
 		this.editor = gui.getEditor();
 	}
 	
-	public boolean startServer(int port){
+	public boolean startServer(int port, String k){
 		is_server = true;
+		key = k;
 		try {
 			socket = new DatagramSocket(port);
 		} catch (SocketException e) {
@@ -58,8 +61,9 @@ public class Connection {
 		
 		return true;
 	}
-	public boolean startClient(String IP, int port){
+	public boolean startClient(String IP, int port, String k){
 		is_server = false;
+		key = k;
 		try {
 			remote_addr = InetAddress.getByName(IP);
 			remote_port = port;
@@ -99,6 +103,9 @@ public class Connection {
 	public boolean isConnected(){
 		return connected;
 	}
+	public String getKey(){
+		return key;
+	}
 	
 	//simulators
 	private boolean sml_flag = false;
@@ -120,6 +127,8 @@ public class Connection {
 		gui.getStatusbar().init();
 	}
 	public void init(){
+		key = "123456";
+		
 		port = 0;
 		remote_addr = null;
 		remote_port = 0;

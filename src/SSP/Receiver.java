@@ -3,20 +3,29 @@ package SSP;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import editor.gui.Editor;
 
 public class Receiver extends Thread {
 	private Connection conn;
 	private Editor editor;
+	private String key;
 	DatagramSocket socket = null;
 	DatagramPacket dp;
 	States rcvdStates;
+	
 	
 	public Receiver(Connection conn, DatagramSocket socket){
 		this.conn = conn;
 		this.socket = socket;
 		this.editor = conn.getEditor();
+		this.key = conn.getKey();
 		rcvdStates = new States();
 	}
 	
@@ -38,7 +47,7 @@ public class Receiver extends Thread {
         		socket.receive(dp);
         		byte[] arr = new byte[dp.getLength()];
         		System.arraycopy(dp.getData(), 0, arr, 0, dp.getLength());
-        		Packet p = Packet.parseFrom(arr);
+        		Packet p = Packet.parseFrom(arr, key);
         		conn.last_heard_time = System.currentTimeMillis();
         		
         		updateRemoteInfo();
@@ -46,17 +55,23 @@ public class Receiver extends Thread {
         		
         		unpack(p);
         		
-        		System.out.println("recv : " + rcvdStates);
+//        		System.out.println("recv : " + rcvdStates);
         	}
             
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException | InvalidKeyException | IllegalBlockSizeException | NoSuchAlgorithmException | NoSuchPaddingException e) {
             if(conn.isRun())
             	e.printStackTrace();
             //else the sender has sent the END and close this socket, so this receiver stop blocking and finish normally
-        }
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			System.out.println("client key wrong!");
+			run();
+		}
 	}
 	
 	private void unpack(Packet p){
+		System.out.println(p.TYPE);
+		
 		switch(p.TYPE){
 		case NEW:
 			SSP.State rs = p.unpack();
@@ -123,8 +138,8 @@ public class Receiver extends Thread {
 	    conn.remote_port = dp.getPort();
 	    conn.updateRemoteInfo();
 	}
-	private void updateLastHeardInfo(){
-		conn.updateDelay();
-	}
+//	private void updateLastHeardInfo(){
+//		conn.updateDelay();
+//	}
 	
 }

@@ -191,7 +191,7 @@ public class Editor extends javax.swing.JPanel {
 	//sync the title of the editor window
 	public void syncTitle() {
 		String CSSName = CSSPath.substring(CSSPath.lastIndexOf("\\") + 1);
-		gui.setTitle(RES.EDITOR_NAME + " - " + ((path == "") ? RES.NEW_FILE_NAME : path) + " - " + CSSName);
+		gui.setTitle(RES.EDITOR_NAME + " - " + ((path == "") ? RES.NEW_FILE_NAME : path));
 	}
 
 	//get the path of file edited now

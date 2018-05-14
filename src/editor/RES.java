@@ -43,7 +43,7 @@ public class RES {
 	public static final String confirmdialog_text_selectexist = "文件已存在。是否选择";
 	public static final String confirmdialog_title_selectexist = "是否选择";
 	public static final String filechooser_selectcss = "选择CSS文件";	
-	public static final String messagedialog_text_about = "Orz...\n***的JAVA作业";
+	public static final String messagedialog_text_about = "Orz...\n@author ANJINSHUO\n@date 2018/5/1";
 	public static final String messagedialog_title_about = "关于";
 	
 	
