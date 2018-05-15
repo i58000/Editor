@@ -81,20 +81,14 @@ public class Sender extends Thread {
         }
 	}
 	
-	private void close(){
+	private void close() {
 		Packet p = new Packet();
-		try {
-			send(p);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			if(conn.isRun())
-				e.printStackTrace();
-		}
+		send(p);
 		socket.close();
 		conn.init();
 	}
 	
-	private void send(Packet p) throws IOException{
+	private void send(Packet p) {
 		/*
 		 * simulator begin
 		 */
@@ -107,7 +101,15 @@ public class Sender extends Thread {
 		dp = new DatagramPacket(new byte[0], 0, conn.remote_addr, conn.remote_port);
 		byte[] arr = p.toByteArray(key);
         dp.setData(arr);//填充DatagramPacket
-        socket.send(dp);//发送
+        try{
+        	socket.send(dp);//发送
+        } catch (IOException e) {
+        	if(conn.isRun()){
+        		conn.updateDelay();
+        	}
+//				e.printStackTrace();
+        }
+        
 	}
 	
 	private boolean init() throws IOException, InterruptedException{

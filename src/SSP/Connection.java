@@ -144,7 +144,7 @@ public class Connection {
 	}
 	
 	public void updateRemoteInfo(){
-		String ip = remote_addr.getHostName();
+		String ip = remote_addr.getHostAddress();
 		String port = Integer.toString(remote_port);
 		gui.getStatusbar().updateRemoteInfo(ip + ":" + port);
 	}
