@@ -102,7 +102,8 @@ public class Sender extends Thread {
 		byte[] arr = p.toByteArray(key);
         dp.setData(arr);//填充DatagramPacket
         try{
-        	socket.send(dp);//发送
+        	if(conn.remote_addr != null)
+        		socket.send(dp);//发送
         } catch (IOException e) {
         	if(conn.isRun()){
         		conn.updateDelay();
