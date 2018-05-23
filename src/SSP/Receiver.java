@@ -18,7 +18,7 @@ public class Receiver extends Thread {
 	private String key;
 	DatagramSocket socket = null;
 	DatagramPacket dp;
-	States rcvdStates;
+	StateList rcvdStates;
 	
 	
 	public Receiver(Connection conn, DatagramSocket socket){
@@ -26,7 +26,7 @@ public class Receiver extends Thread {
 		this.socket = socket;
 		this.editor = conn.getEditor();
 		this.key = conn.getKey();
-		rcvdStates = new States();
+		rcvdStates = new StateList();
 	}
 	
 	public void run() {

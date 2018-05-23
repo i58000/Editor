@@ -11,12 +11,12 @@ import editor.gui.GUI;
 public class Connection {
 	final static long TIMEOUT_CONNECT = 1000;
 	final static long TIMEOUT_HEARD = 5000;
-	final static long TIMEOUT_RESEND = 5000;
 	final static long TIMEOUT_DISCONNECT = 60000;
 	
+	final static long INTERVAL_RESEND = 5000;
 	final static long INTERVAL_SEND = 500;//500
 	final static long INTERVAL_CLIENT_CHECK_CONNECT = 100;
-	final static long INTERVAL_SERVER_CHECK_RUN = 100;
+	final static long INTERVAL_SERVER_CHECK_CONNECT = 100;
 	
 	private Editor editor;
 	private GUI gui;

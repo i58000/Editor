@@ -3,7 +3,7 @@ package SSP;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class States {
+public class StateList {
 	private LinkedList<State> list;
 	
 	/* recv:
@@ -72,13 +72,13 @@ public class States {
 		State exist = list.getFirst();
 		exist.text = text;
 	}
-	public boolean isResend(){
-		for(State i : list){
-			if(i.num - i.old > 1)
-				return true;
-		}
-		return false;
-	}
+//	public boolean isResend(){
+//		for(State i : list){
+//			if(i.num - i.old > 1)
+//				return true;
+//		}
+//		return false;
+//	}
 	
 	public State getLast(){
 		return list.getLast();
@@ -90,7 +90,7 @@ public class States {
 		return list;
 	}
 	
-	States(){
+	StateList(){
 		State.lastNum = 0; //reconnect
 		list = new LinkedList<State>();
 	}

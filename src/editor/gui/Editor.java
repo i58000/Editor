@@ -38,7 +38,6 @@ import org.w3c.dom.css.CSSStyleSheet;
 
 import com.steadystate.css.parser.CSSOMParser;
 
-import CSCW.UserAction;
 import editor.RES;
 
 public class Editor extends javax.swing.JPanel {

@@ -18,14 +18,14 @@ public class Sender extends Thread {
 	DatagramSocket socket = null;
 	DatagramPacket dp;
 	
-	States sentStates;
+	StateList sentStates;
 	
 	public Sender(Connection conn, DatagramSocket socket){
 		this.conn = conn;
 		this.socket = socket;
 		this.editor = conn.getEditor();
 		this.key = conn.getKey();
-		sentStates = new States(); //warning
+		sentStates = new StateList(); //warning
 	}
 	
 	public void run() {
@@ -44,7 +44,7 @@ public class Sender extends Thread {
 	            		boolean forced_resend = (now - conn.last_heard_time > Connection.TIMEOUT_HEARD);
 	            		
 	            		//3. if last_sent_first timeout, send all states in the sentStates
-	            		if(now - conn.last_resend_time > Connection.TIMEOUT_RESEND){
+	            		if(now - conn.last_resend_time > Connection.INTERVAL_RESEND){
 	            			conn.last_resend_time = now;
 	            			Iterator<SSP.State> iterator = sentStates.getAll().iterator();
 	            			while (iterator.hasNext()) {
@@ -118,7 +118,7 @@ public class Sender extends Thread {
 			while(conn.isRun()){
 				if(conn.remote_addr != null) 
 					break;
-				sleep(Connection.INTERVAL_SERVER_CHECK_RUN);
+				sleep(Connection.INTERVAL_SERVER_CHECK_CONNECT);
 			}
 			
 		}
