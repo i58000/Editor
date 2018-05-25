@@ -36,6 +36,8 @@ public class CSCWUI extends JDialog {
 		tabbedPane = new JTabbedPane();
 		clientPanel = new JPanel();
 		serverPanel = new JPanel();
+		
+		setIconImage(RES.icon);
 		initComponents();
 	}
 	private void initComponents() {

@@ -1,11 +1,18 @@
 package editor;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
 public class RES {
 	public static final String EDITOR_NAME = "Editor";
 	public static final String NEW_FILE_NAME = "new file";
 	public static final String CSS_PATH = "res/css/";
 	public static final String DEFAULT_CSS_FILE = "default.css";
-
+	
+	//icon
+	public static final Image icon = new ImageIcon(new String("res/img/icon.png")).getImage();
+ 
 	//MenuBar.java
 	public static final String menubar_file = "文件(F)";
 	public static final String menubar_edit = "编辑(E)";

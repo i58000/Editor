@@ -1,9 +1,11 @@
 package editor.gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 //import CSCW.CSCWManager;
 import SSP.Connection;
+import editor.RES;
 
 
 public class GUI extends JFrame {
@@ -29,6 +31,9 @@ public class GUI extends JFrame {
 //		cscwManager = new CSCWManager(this);
 		conn = new Connection(this);
 		
+		
+	    setIconImage(RES.icon);
+	    
 		initComponents();
 	}
 	private void initComponents() {
